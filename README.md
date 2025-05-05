@@ -180,12 +180,12 @@
         <div class="text-center mb-6">
           <p class="text-lg"><strong>Email :</strong> <a href="mailto:plajoevital@gmail.com" class="text-teal-600 hover:underline">plajoevital@gmail.com</a></p>
           <p class="text-lg"><strong>Téléphone :</strong> <a href="tel:+33745042320" class="text-teal-600 hover:underline">+33 7 45 04 23 20</a></p>
-          <p class="text-lg"><strong>LinkedIn :</strong> <a href="https://linkedin.com/in/vitalplajoe" class="text-teal-600 hover:underline">linkedin.com/in/vitalplajoe</a></p>
+          <p class="text-lg"><strong>LinkedIn :</strong> <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">linkedin.com/in/vitalplajoe</a></p>
           <p class="text-lg mt-4">18 rue de l’Île de France, 91860 Épinay-sous-Sénart</p>
         </div>
         <div class="space-y-4">
-          <input type="text" id="name" placeholder="Votre nom" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
-          <input type="email" id="email" placeholder="Votre email" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
+          <input type="text" id="name" placeholder="Vital PLAJOE" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
+          <input type="email" id="email" placeholder="plajoevital@gmail.com" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
           <textarea id="message" placeholder="Votre message" rows="5" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
           <button onclick="sendMessage()" class="w-full bg-teal-600 text-white p-3 rounded-lg hover:bg-teal-700 transition hover-scale">Envoyer</button>
         </div>
@@ -200,7 +200,7 @@
       <p class="mt-2">
         <a href="mailto:plajoevital@gmail.com" class="hover:text-teal-400">plajoevital@gmail.com</a> | 
         <a href="tel:+33745042320" class="hover:text-teal-400">+33 7 45 04 23 20</a> | 
-        <a href="https://linkedin.com/in/vitalplajoe" class="hover:text-teal-400">LinkedIn</a>
+        <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">LinkedIn</a>
       </p>
     </div>
   </footer>
