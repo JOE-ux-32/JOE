@@ -180,7 +180,7 @@
         <div class="text-center mb-6">
           <p class="text-lg"><strong>Email :</strong> <a href="mailto:plajoevital@gmail.com" class="text-teal-600 hover:underline">plajoevital@gmail.com</a></p>
           <p class="text-lg"><strong>Téléphone :</strong> <a href="tel:+33745042320" class="text-teal-600 hover:underline">+33 7 45 04 23 20</a></p>
-          <p class="text-lg"><strong>LinkedIn :</strong> <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">linkedin.com/in/vitalplajoe</a></p>
+          <p class="text-lg"><strong>LinkedIn :</strong> <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">www.linkedin.com/in/vital-plajoe-40b0b4350</a></p>
           <p class="text-lg mt-4">18 rue de l’Île de France, 91860 Épinay-sous-Sénart</p>
         </div>
         <div class="space-y-4">
@@ -200,7 +200,7 @@
       <p class="mt-2">
         <a href="mailto:plajoevital@gmail.com" class="hover:text-teal-400">plajoevital@gmail.com</a> | 
         <a href="tel:+33745042320" class="hover:text-teal-400">+33 7 45 04 23 20</a> | 
-        <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">LinkedIn</a>
+        <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">www.linkedin.com/in/vital-plajoe-40b0b4350</a>
       </p>
     </div>
   </footer>
