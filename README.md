@@ -1,43 +1,4 @@
-<script type="text/javascript">
-        var gk_isXlsx = false;
-        var gk_xlsxFileLookup = {};
-        var gk_fileData = {};
-        function filledCell(cell) {
-          return cell !== '' && cell != null;
-        }
-        function loadFileData(filename) {
-        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-            try {
-                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-                var firstSheetName = workbook.SheetNames[0];
-                var worksheet = workbook.Sheets[firstSheetName];
-
-                // Convert sheet to JSON to filter blank rows
-                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-                // Filter out blank rows (rows where all cells are empty, null, or undefined)
-                var filteredData = jsonData.filter(row => row.some(filledCell));
-
-                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-                var headerRowIndex = filteredData.findIndex((row, index) =>
-                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-                );
-                // Fallback
-                if (headerRowIndex === -1 || headerRowIndex > 25) {
-                  headerRowIndex = 0;
-                }
-
-                // Convert filtered JSON back to CSV
-                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-                return csv;
-            } catch (e) {
-                console.error(e);
-                return "";
-            }
-        }
-        return gk_fileData[filename] || "";
-        }
-        </script><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
@@ -68,6 +29,45 @@
   </style>
 </head>
 <body class="bg-gray-50 text-gray-900 smooth-scroll">
+  <!-- JavaScript for Excel file handling -->
+  <script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+          var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+          var firstSheetName = workbook.SheetNames[0];
+          var worksheet = workbook.Sheets[firstSheetName];
+          // Convert sheet to JSON to filter blank rows
+          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+          // Filter out blank rows (rows where all cells are empty, null, or undefined)
+          var filteredData = jsonData.filter(row => row.some(filledCell));
+          // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+          var headerRowIndex = filteredData.findIndex((row, index) =>
+            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+          );
+          // Fallback
+          if (headerRowIndex === -1 || headerRowIndex > 25) {
+            headerRowIndex = 0;
+          }
+          // Convert filtered JSON back to CSV
+          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+          return csv;
+        } catch (e) {
+          console.error(e);
+          return "";
+        }
+      }
+      return gk_fileData[filename] || "";
+    }
+  </script>
+
   <!-- Navbar -->
   <nav class="bg-white shadow-lg fixed w-full z-10">
     <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
@@ -77,6 +77,8 @@
         <li><a href="#a-propos" class="hover:text-teal-600 transition">À propos</a></li>
         <li><a href="#competences" class="hover:text-teal-600 transition">Compétences</a></li>
         <li><a href="#experiences" class="hover:text-teal-600 transition">Expériences</a></li>
+        <li><a href="#formation" class="hover:text-teal-600 transition">Formation</a></li>
+        <li><a href="#interets" class="hover:text-teal-600 transition">Centres d’intérêt</a></li>
         <li><a href="#contact" class="hover:text-teal-600 transition">Contact</a></li>
       </ul>
     </div>
@@ -86,7 +88,7 @@
   <section id="accueil" class="min-h-screen flex items-center bg-gradient-to-r from-teal-500 to-cyan-600 text-white">
     <div class="max-w-7xl mx-auto px-4 text-center animate-fade-in">
       <h2 class="text-5xl font-bold mb-4">Bienvenue sur le site de Vital PLAJOE</h2>
-      <p class="text-xl mb-6">Étudiant en Comptabilité et Gestion à la recherche d'une alternance pour septembre 2025</p>
+      <p class="text-xl mb-6">Étudiant en Comptabilité et Gestion à la recherche d'une alternance en tant qu’assistant comptable pour septembre 2025 à Île-de-France</p>
       <a href="#contact" class="bg-white text-teal-600 px-6 py-3 rounded-full font-semibold hover:bg-teal-100 transition hover-scale">Me contacter</a>
     </div>
   </section>
@@ -97,7 +99,7 @@
       <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">À propos de moi</h2>
       <div class="flex flex-col items-center">
         <p class="text-lg max-w-3xl">
-          Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis motivé à rejoindre une entreprise en tant qu’assistant comptable pour une alternance de 12 mois à partir de septembre 2025. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage.
+          Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis à la recherche d’une alternance en tant qu’assistant comptable pour septembre 2025 à Île-de-France. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage. J’habite au 20 av. Léon Blum, Épinay-sur-Seine 93800.
         </p>
       </div>
     </div>
@@ -110,20 +112,20 @@
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
           <h3 class="text-xl font-semibold mb-2 text-teal-600">Comptabilité</h3>
-          <p>Gestion de paie, lettrage, pointage et traitement des factures, création de comptes clients/fournisseurs</p>
+          <p>Saisie et comptabilisation de factures, gestion de paie, lettrage, pointage, rapprochement bancaire, comptabilisation de la TVA, OD</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
           <h3 class="text-xl font-semibold mb-2 text-teal-600">Outils informatiques</h3>
-          <p>Microsoft Office (Excel, Word, PowerPoint), Progiciel de Gestion Intégré (PGI)</p>
+          <p>Microsoft Office (Excel, Word, PowerPoint), Progiciel de Gestion Intégré (PGI), Cegid, Full</p>
         </div>
         <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Soft skills</h3>
-          <p>Organisation, cohésion d’équipe, gestion du temps, adaptabilité</p>
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Atouts</h3>
+          <p>Organisation, cohésion d’équipe, bonne capacité de collaboration, gestion efficace du temps et des priorités, adaptabilité</p>
         </div>
       </div>
       <div class="mt-8 text-center">
         <h3 class="text-xl font-semibold mb-2 text-teal-600">Langues</h3>
-        <p>Anglais : Intermédiaire</p>
+        <p>Anglais : B1</p>
       </div>
     </div>
   </section>
@@ -134,13 +136,26 @@
       <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Mes expériences</h2>
       <div class="space-y-8">
         <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
+          <h3 class="text-xl font-semibold text-teal-600">Assistant comptable - S.P.L EXPERTISE, Évry-Courcouronnes</h3>
+          <p class="text-gray-600">Juin 2025 - Juillet 2025</p>
+          <ul class="list-disc list-inside">
+            <li>Saisie et comptabilisation de factures clients et fournisseurs</li>
+            <li>Saisie et comptabilisation de banque</li>
+            <li>Rapprochement bancaire</li>
+            <li>Lettrage</li>
+            <li>Comptabilisation de la TVA, OD</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
           <h3 class="text-xl font-semibold text-teal-600">Stagiaire comptable - Cabinet ACEF, Lomé, Togo</h3>
           <p class="text-gray-600">Juin 2023 - Juin 2024</p>
           <ul class="list-disc list-inside">
             <li>Assistance dans la gestion de paie</li>
             <li>Lettrage, pointage et traitement des factures</li>
-            <li>Création de factures et gestion des comptes clients/fournisseurs</li>
-            <li>Gestion des relances et des litiges</li>
+            <li>Création de factures</li>
+            <li>Création de comptes fournisseurs et comptes clients</li>
+            <li>Gestion des relances clients et fournisseurs</li>
+            <li>Gestion des litiges</li>
           </ul>
         </div>
         <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
@@ -148,7 +163,7 @@
           <p class="text-gray-600">Janvier 2022 - Mars 2023</p>
           <ul class="list-disc list-inside">
             <li>Gestion des transactions en espèces et par carte de crédit</li>
-            <li>Accueil et assistance aux clients</li>
+            <li>Accueil et assistance aux clients pour répondre à leurs besoins</li>
           </ul>
         </div>
       </div>
@@ -172,6 +187,27 @@
     </div>
   </section>
 
+  <!-- Centres d’intérêt -->
+  <section id="interets" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
+      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Mes centres d’intérêt</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Sport</h3>
+          <p>Football</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Voyages</h3>
+          <p>Découverte de nouvelles cultures et destinations</p>
+        </div>
+        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
+          <h3 class="text-xl font-semibold mb-2 text-teal-600">Bénévolat</h3>
+          <p>Engagement dans une association pour des causes sociales</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section id="contact" class="py-20 bg-gray-50">
     <div class="max-w-7xl mx-auto px-4 animate-fade-in">
@@ -180,8 +216,9 @@
         <div class="text-center mb-6">
           <p class="text-lg"><strong>Email :</strong> <a href="mailto:plajoevital@gmail.com" class="text-teal-600 hover:underline">plajoevital@gmail.com</a></p>
           <p class="text-lg"><strong>Téléphone :</strong> <a href="tel:+33745042320" class="text-teal-600 hover:underline">+33 7 45 04 23 20</a></p>
-          <p class="text-lg"><strong>LinkedIn :</strong> <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">linkedin"www.linkedin.com/in/vital-plajoe-40b0b4350"</a></p>
-          <p class="text-lg mt-4">18 rue de l’Île de France, 91860 Épinay-sous-Sénart</p>
+          <p class="text-lg"><strong>LinkedIn :</strong> <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">linkedin.com/in/vital-plajoe-40b0b4350</a></p>
+          <p class="text-lg"><strong>Site web :</strong> <a href="https://joe-ux-32.github.io/JOE/" class="text-teal-600 hover:underline">joe-ux-32.github.io/JOE/</a></p>
+          <p class="text-lg mt-4">20 av. Léon Blum, Épinay-sur-Seine 93800</p>
         </div>
         <div class="space-y-4">
           <input type="text" id="name" placeholder="Votre nom" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
@@ -200,7 +237,7 @@
       <p class="mt-2">
         <a href="mailto:plajoevital@gmail.com" class="hover:text-teal-400">plajoevital@gmail.com</a> | 
         <a href="tel:+33745042320" class="hover:text-teal-400">+33 7 45 04 23 20</a> | 
-        <a href="www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">LinkedIn"www.linkedin.com/in/vital-plajoe-40b0b4350"</a>
+        <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">linkedin.com/in/vital-plajoe-40b0b4350</a>
       </p>
     </div>
   </footer>
