@@ -88,7 +88,7 @@
   <section id="accueil" class="min-h-screen flex items-center bg-gradient-to-r from-teal-500 to-cyan-600 text-white">
     <div class="max-w-7xl mx-auto px-4 text-center animate-fade-in">
       <h2 class="text-5xl font-bold mb-4">Bienvenue sur le site de Vital PLAJOE</h2>
-      <p class="text-xl mb-6">Étudiant en Comptabilité et Gestion à la recherche d'une alternance en tant qu’assistant comptable pour septembre 2025 à Île-de-France</p>
+      <p class="text-xl mb-6">Étudiant en Comptabilité et Gestion à la recherche d'une alternance en tant qu’assistant comptable pour septembre 2025</p>
       <a href="#contact" class="bg-white text-teal-600 px-6 py-3 rounded-full font-semibold hover:bg-teal-100 transition hover-scale">Me contacter</a>
     </div>
   </section>
@@ -99,7 +99,7 @@
       <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">À propos de moi</h2>
       <div class="flex flex-col items-center">
         <p class="text-lg max-w-3xl">
-          Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis à la recherche d’une alternance en tant qu’assistant comptable pour septembre 2025 à Île-de-France. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage. J’habite au 20 av. Léon Blum, Épinay-sur-Seine 93800.
+          Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis à la recherche d’une alternance en tant qu’assistant comptable pour septembre 2025. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage.
         </p>
       </div>
     </div>
