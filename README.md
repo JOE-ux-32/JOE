@@ -1,262 +1,238 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio Alternance - Vital Plajoe</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-    .smooth-scroll {
-      scroll-behavior: smooth;
-    }
-    .animate-fade-in {
-      animation: fadeIn 1s ease-in-out;
-    }
-    .hover-scale {
-      transition: transform 0.3s ease;
-    }
-    .hover-scale:hover {
-      transform: scale(1.05);
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-  </style>
-</head>
-<body class="bg-gray-50 text-gray-900 smooth-scroll">
-  <!-- JavaScript for Excel file handling -->
-  <script type="text/javascript">
-    var gk_isXlsx = false;
-    var gk_xlsxFileLookup = {};
-    var gk_fileData = {};
-    function filledCell(cell) {
-      return cell !== '' && cell != null;
-    }
-    function loadFileData(filename) {
-      if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
-        try {
-          var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
-          var firstSheetName = workbook.SheetNames[0];
-          var worksheet = workbook.Sheets[firstSheetName];
-          // Convert sheet to JSON to filter blank rows
-          var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
-          // Filter out blank rows (rows where all cells are empty, null, or undefined)
-          var filteredData = jsonData.filter(row => row.some(filledCell));
-          // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
-          var headerRowIndex = filteredData.findIndex((row, index) =>
-            row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
-          );
-          // Fallback
-          if (headerRowIndex === -1 || headerRowIndex > 25) {
-            headerRowIndex = 0;
-          }
-          // Convert filtered JSON back to CSV
-          var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
-          csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
-          return csv;
-        } catch (e) {
-          console.error(e);
-          return "";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio Alternance - Vital Plajoe | Assistant Comptable</title>
+    <meta name="description" content="Portfolio de Vital Plajoe, étudiant en BTS Comptabilité et Gestion à la recherche d'une alternance assistant comptable pour septembre 2025.">
+    <meta property="og:title" content="Portfolio Alternance - Vital Plajoe, Assistant Comptable">
+    <meta property="og:description" content="Étudiant rigoureux et organisé en Comptabilité et Gestion, à la recherche d'une alternance pour septembre 2025.">
+    <meta property="og:image" content="[VOTRE_LIEN_VERS_LA_PHOTO_PROFESSIONNELLE_POUR_OG]">
+    <meta property="og:url" content="[VOTRE_URL_DU_SITE]">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Définition des couleurs principales pour une cohérence facile */
+        :root {
+            --color-primary: #1e3a8a; /* Dark Blue / Navy */
+            --color-accent: #08efb9;  /* Amber / Gold Accent */
         }
-      }
-      return gk_fileData[filename] || "";
-    }
-  </script>
 
-  <!-- Navbar -->
-  <nav class="bg-white shadow-lg fixed w-full z-10">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <h1 class="text-2xl font-bold text-teal-600">Vital Plajoe</h1>
-      <ul class="flex space-x-6">
-        <li><a href="#accueil" class="hover:text-teal-600 transition">Accueil</a></li>
-        <li><a href="#a-propos" class="hover:text-teal-600 transition">À propos</a></li>
-        <li><a href="#competences" class="hover:text-teal-600 transition">Compétences</a></li>
-        <li><a href="#experiences" class="hover:text-teal-600 transition">Expériences</a></li>
-        <li><a href="#formation" class="hover:text-teal-600 transition">Formation</a></li>
-        <li><a href="#interets" class="hover:text-teal-600 transition">Centres d’intérêt</a></li>
-        <li><a href="#contact" class="hover:text-teal-600 transition">Contact</a></li>
-      </ul>
-    </div>
-  </nav>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .smooth-scroll {
+            scroll-behavior: smooth;
+        }
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        /* Effet de subtile élévation pour les cartes */
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.1), 0 5px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 smooth-scroll">
 
-  <!-- Hero Section -->
-  <section id="accueil" class="min-h-screen flex items-center bg-gradient-to-r from-teal-500 to-cyan-600 text-white">
-    <div class="max-w-7xl mx-auto px-4 text-center animate-fade-in">
-      <h2 class="text-5xl font-bold mb-4">Bienvenue sur le site de Vital PLAJOE</h2>
-      <p class="text-xl mb-6">Étudiant en Comptabilité et Gestion à la recherche d'une alternance en tant qu’assistant comptable pour septembre 2025</p>
-      <a href="#contact" class="bg-white text-teal-600 px-6 py-3 rounded-full font-semibold hover:bg-teal-100 transition hover-scale">Me contacter</a>
-    </div>
-  </section>
+    <header>
+        <nav class="bg-white shadow-lg fixed w-full z-20">
+            <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+                <h1 style="color: var(--color-primary);" class="text-2xl font-extrabold tracking-wider">Vital Plajoe</h1>
+                <ul class="hidden md:flex space-x-8 navbar-menu">
+                    <li><a href="#accueil" class="hover:text-amber-500 font-semibold transition">Accueil</a></li>
+                    <li><a href="#a-propos" class="hover:text-amber-500 font-semibold transition">À propos</a></li>
+                    <li><a href="#competences" class="hover:text-amber-500 font-semibold transition">Compétences</a></li>
+                    <li><a href="#experiences" class="hover:text-amber-500 font-semibold transition">Expériences</a></li>
+                    <li><a href="#formation" class="hover:text-amber-500 font-semibold transition">Formation</a></li>
+                    <li><a href="#interets" class="hover:text-amber-500 font-semibold transition">Intérêts</a></li>
+                    <li><a href="#contact" class="hover:text-amber-500 font-semibold transition">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
 
-  <!-- À propos -->
-  <section id="a-propos" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">À propos de moi</h2>
-      <div class="flex flex-col items-center">
-        <p class="text-lg max-w-3xl">
-          Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis à la recherche d’une alternance en tant qu’assistant comptable pour septembre 2025. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage.
-        </p>
-      </div>
-    </div>
-  </section>
+    <main>
+        <section id="accueil" class="min-h-screen flex items-center pt-24 pb-12" style="background-color: var(--color-primary);">
+            <div class="max-w-7xl mx-auto px-6 text-center text-white animate-fade-in">
+                
+                <h2 class="text-4xl md:text-7xl font-extrabold mb-6 leading-tight tracking-tight">
+                    Vital PLAJOE
+                </h2>
+                <p class="text-xl md:text-3xl font-light mb-10 max-w-5xl mx-auto">
+                    Étudiant en Comptabilité et Gestion, je recherche une alternance en tant qu’<span class="font-bold" style="color: var(--color-accent);">Assistant Comptable</span> pour septembre 2025.
+                </p>
+                <a href="#contact" class="bg-amber-500 text-gray-900 px-10 py-4 rounded-full text-xl font-bold shadow-2xl hover:bg-amber-400 transition duration-300 card-hover">
+                    Me Contacter pour l'Alternance
+                </a>
+            </div>
+        </section>
 
-  <!-- Compétences -->
-  <section id="competences" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Mes compétences</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Comptabilité</h3>
-          <p>Saisie et comptabilisation de factures, gestion de paie, lettrage, pointage, rapprochement bancaire, comptabilisation de la TVA, OD</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Outils informatiques</h3>
-          <p>Microsoft Office (Excel, Word, PowerPoint), Progiciel de Gestion Intégré (PGI), Cegid, Full</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Atouts</h3>
-          <p>Organisation, cohésion d’équipe, bonne capacité de collaboration, gestion efficace du temps et des priorités, adaptabilité</p>
-        </div>
-      </div>
-      <div class="mt-8 text-center">
-        <h3 class="text-xl font-semibold mb-2 text-teal-600">Langues</h3>
-        <p>Anglais : B1</p>
-      </div>
-    </div>
-  </section>
+        <section id="a-propos" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 style="color: var(--color-primary);" class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">À Propos de Moi</h2>
+                <div class="flex flex-col items-center">
+                    <p class="text-xl text-gray-700 max-w-4xl leading-relaxed text-center">
+                        Je suis Vital Plajoe, étudiant en BTS Comptabilité et Gestion à ESG-Finance Paris. Âgé de 22 ans, je suis à la recherche d’une alternance en tant qu’assistant comptable pour septembre 2025. Rigoureux, organisé et doté d’un esprit analytique, je souhaite mettre mes compétences solides en comptabilité, gestion et analyse financière au service de projets concrets tout en poursuivant mon apprentissage.
+                    </p>
+                </div>
+            </div>
+        </section>
 
-  <!-- Expériences -->
-  <section id="experiences" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Mes expériences</h2>
-      <div class="space-y-8">
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
-          <h3 class="text-xl font-semibold text-teal-600">Assistant comptable - S.P.L EXPERTISE, Évry-Courcouronnes</h3>
-          <p class="text-gray-600">Juin 2025 - Juillet 2025</p>
-          <ul class="list-disc list-inside">
-            <li>Saisie et comptabilisation de factures clients et fournisseurs</li>
-            <li>Saisie et comptabilisation de banque</li>
-            <li>Rapprochement bancaire</li>
-            <li>Lettrage</li>
-            <li>Comptabilisation de la TVA, OD</li>
-          </ul>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
-          <h3 class="text-xl font-semibold text-teal-600">Stagiaire comptable - Cabinet ACEF, Lomé, Togo</h3>
-          <p class="text-gray-600">Juin 2023 - Juin 2024</p>
-          <ul class="list-disc list-inside">
-            <li>Assistance dans la gestion de paie</li>
-            <li>Lettrage, pointage et traitement des factures</li>
-            <li>Création de factures</li>
-            <li>Création de comptes fournisseurs et comptes clients</li>
-            <li>Gestion des relances clients et fournisseurs</li>
-            <li>Gestion des litiges</li>
-          </ul>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg hover-scale">
-          <h3 class="text-xl font-semibold text-teal-600">Caissier - Oriental Fast-Food, Lomé, Togo</h3>
-          <p class="text-gray-600">Janvier 2022 - Mars 2023</p>
-          <ul class="list-disc list-inside">
-            <li>Gestion des transactions en espèces et par carte de crédit</li>
-            <li>Accueil et assistance aux clients pour répondre à leurs besoins</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="competences" class="py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 style="color: var(--color-primary);" class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">Mes Compétences Clés</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <article class="bg-white p-8 rounded-xl shadow-lg card-hover border-t-4 border-amber-500">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-bold mb-4">Comptabilité & Finance</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Saisie et comptabilisation (factures, banques, OD)</li>
+                            <li>Gestion de paie, Lettrage, Pointage</li>
+                            <li>Rapprochement bancaire, Comptabilisation de la TVA</li>
+                        </ul>
+                    </article>
+                    <article class="bg-white p-8 rounded-xl shadow-lg card-hover border-t-4 border-amber-500">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-bold mb-4">Outils & Logiciels</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Microsoft Office (Excel,Word, PowerPoint)</li>
+                            <li>Expérience Progiciel de Gestion Intégrée (PGI)</li>
+                            <li>Logiciels comptables : Cegid, Full</li>
+                        </ul>
+                    </article>
+                    <article class="bg-white p-8 rounded-xl shadow-lg card-hover border-t-4 border-amber-500">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-bold mb-4">Atouts & Langues</h3>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Rigueur, Organisation, Adaptabilité</li>
+                            <li>Gestion efficace du temps et des priorités</li>
+                            <li>Anglais : B1 (Intermédiaire)</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-  <!-- Formation -->
-  <section id="formation" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Ma formation</h2>
-      <div class="space-y-8">
-        <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
-          <h3 class="text-xl font-semibold text-teal-600">BTS Comptabilité et Gestion</h3>
-          <p class="text-gray-600">Depuis septembre 2024 - ESG-Finance, Paris</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-lg hover-scale">
-          <h3 class="text-xl font-semibold text-teal-600">Baccalauréat Techniques Quantitatives d’Économie et de Gestion</h3>
-          <p class="text-gray-600">Novembre 2022 - Juin 2023 - Institut Technique d’Enseignement Commercial KOUVAHEY, Lomé, Togo</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="experiences" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 style="color: var(--color-primary);" class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">Parcours Professionnel</h2>
+                <div class="space-y-12 max-w-5xl mx-auto">
+                    <article class="p-8 rounded-xl shadow-xl border-l-4" style="border-color: var(--color-accent); background-color: #f3f4f6;">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-extrabold mb-1">Assistant comptable - S.P.L EXPERTISE</h3>
+                        <p class="text-gray-600 italic mb-3">Juin 2025 - Juillet 2025 | Évry-Courcouronnes (Stage)</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Saisie et comptabilisation de factures clients et fournisseurs</li>
+                            <li>Rapprochement bancaire et Lettrage des comptes</li>
+                            <li>Comptabilisation de la TVA et des Opérations Diverses (OD)</li>
+                        </ul>
+                    </article>
+                    <article class="p-8 rounded-xl shadow-xl border-l-4" style="border-color: var(--color-accent); background-color: #f3f4f6;">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-extrabold mb-1">Stagiaire comptable - Cabinet ACEF</h3>
+                        <p class="text-gray-600 italic mb-3">Juin 2023 - Juin 2024 | Lomé, Togo (Stage long)</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Assistance dans la gestion de paie et le traitement des factures</li>
+                            <li>Création de comptes fournisseurs et clients</li>
+                            <li>Gestion des relances clients et fournisseurs, traitement des litiges</li>
+                        </ul>
+                    </article>
+                    <article class="p-8 rounded-xl shadow-xl border-l-4" style="border-color: var(--color-accent); background-color: #f3f4f6;">
+                        <h3 style="color: var(--color-primary);" class="text-2xl font-extrabold mb-1">Caissier - Oriental Fast-Food</h3>
+                        <p class="text-gray-600 italic mb-3">Janvier 2022 - Mars 2023 | Lomé, Togo</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-700 ml-4">
+                            <li>Gestion des transactions en espèces et par carte de crédit</li>
+                            <li>Accueil et assistance aux clients pour répondre à leurs besoins</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-  <!-- Centres d’intérêt -->
-  <section id="interets" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Mes centres d’intérêt</h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Sport</h3>
-          <p>Football</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Voyages</h3>
-          <p>Découverte de nouvelles cultures et destinations</p>
-        </div>
-        <div class="bg-gray-50 p-6 rounded-lg shadow-lg text-center hover-scale">
-          <h3 class="text-xl font-semibold mb-2 text-teal-600">Bénévolat</h3>
-          <p>Engagement dans une association pour des causes sociales</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="formation" class="py-24 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 style="color: var(--color-primary);" class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">Formation Académique</h2>
+                <div class="space-y-10 max-w-4xl mx-auto">
+                    <article class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-8" style="border-color: var(--color-primary);">
+                        <h3 class="text-2xl font-bold text-gray-900">BTS Comptabilité et Gestion (en cours)</h3>
+                        <p class="text-gray-700 font-medium mt-1 mb-1">Depuis septembre 2024</p>
+                        <p class="text-gray-600">ESG-Finance, Paris</p>
+                    </article>
+                    <article class="bg-white p-8 rounded-xl shadow-lg card-hover border-l-8" style="border-color: var(--color-primary);">
+                        <h3 class="text-2xl font-bold text-gray-900">Baccalauréat Techniques Quantitatives d’Économie et de Gestion</h3>
+                        <p class="text-gray-700 font-medium mt-1 mb-1">Novembre 2022 - Juin 2023</p>
+                        <p class="text-gray-600">Institut Technique d’Enseignement Commercial KOUVAHEY, Lomé, Togo</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <section id="interets" class="py-24 bg-white">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 style="color: var(--color-primary);" class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">Centres d’Intérêt</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <article class="bg-gray-50 p-8 rounded-xl shadow-lg text-center card-hover">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">⚽ Sport - Football</h3>
+                        <p class="text-gray-700">Développement de l'esprit d'équipe, de la discipline et de la persévérance.</p>
+                    </article>
+                    <article class="bg-gray-50 p-8 rounded-xl shadow-lg text-center card-hover">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">✈️ Voyages</h3>
+                        <p class="text-gray-700">Découverte de nouvelles cultures, renforçant l'ouverture d'esprit et l'adaptabilité.</p>
+                    </article>
+                    <article class="bg-gray-50 p-8 rounded-xl shadow-lg text-center card-hover">
+                        <h3 class="text-2xl font-bold mb-3" style="color: var(--color-primary);">🤝 Bénévolat</h3>
+                        <p class="text-gray-700">Engagement dans des causes sociales, démontrant le sens des responsabilités.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
 
-  <!-- Contact -->
-  <section id="contact" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 animate-fade-in">
-      <h2 class="text-3xl font-bold text-center mb-10 text-teal-600">Me contacter</h2>
-      <div class="max-w-lg mx-auto bg-white p-8 rounded-lg shadow-lg">
-        <div class="text-center mb-6">
-          <p class="text-lg"><strong>Email :</strong> <a href="mailto:plajoevital@gmail.com" class="text-teal-600 hover:underline">plajoevital@gmail.com</a></p>
-          <p class="text-lg"><strong>Téléphone :</strong> <a href="tel:+33745042320" class="text-teal-600 hover:underline">+33 7 45 04 23 20</a></p>
-          <p class="text-lg"><strong>LinkedIn :</strong> <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="text-teal-600 hover:underline">linkedin.com/in/vital-plajoe-40b0b4350</a></p>
-          <p class="text-lg"><strong>Site web :</strong> <a href="https://joe-ux-32.github.io/JOE/" class="text-teal-600 hover:underline">joe-ux-32.github.io/JOE/</a></p>
-          <p class="text-lg mt-4">20 av. Léon Blum, Épinay-sur-Seine 93800</p>
-        </div>
-        <div class="space-y-4">
-          <input type="text" id="name" placeholder="Votre nom" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
-          <input type="email" id="email" placeholder="Votre email" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600">
-          <textarea id="message" placeholder="Votre message" rows="5" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600"></textarea>
-          <button onclick="sendMessage()" class="w-full bg-teal-600 text-white p-3 rounded-lg hover:bg-teal-700 transition hover-scale">Envoyer</button>
-        </div>
-      </div>
-    </div>
-  </section>
+        <section id="contact" class="py-24 text-white" style="background-color: var(--color-primary);">
+            <div class="max-w-7xl mx-auto px-6 animate-fade-in">
+                <h2 class="text-4xl font-bold text-center mb-16 border-b-4 border-amber-500 inline-block pb-1">Contactez-moi</h2>
+                <div class="max-w-lg mx-auto bg-gray-800 p-10 rounded-xl shadow-2xl">
+                    <div class="text-center mb-8 space-y-3">
+                        <p class="text-xl">
+                            <strong style="color: var(--color-accent);">Email :</strong> 
+                            <a href="mailto:plajoevital@gmail.com" class="hover:text-amber-400 transition underline">plajoevital@gmail.com</a>
+                        </p>
+                        <p class="text-xl">
+                            <strong style="color: var(--color-accent);">Téléphone :</strong> 
+                            <a href="tel:+33745042320" class="hover:text-amber-400 transition underline">+33 7 45 04 23 20</a>
+                        </p>
+                        <p class="text-xl">
+                            <strong style="color: var(--color-accent);">LinkedIn :</strong> 
+                            <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-amber-400 transition underline">Mon Profil LinkedIn</a>
+                        </p>
+                        <p class="text-md mt-6 text-gray-400">
+                            20 av. Léon Blum, Épinay-sur-Seine 93800
+                        </p>
+                    </div>
+                    
+                    <form action="[VOTRE_ENDPOINT_FORMSPREE_ICI]" method="POST" class="space-y-4">
+                        <input type="text" name="name" placeholder="Votre nom" required class="w-full p-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <input type="email" name="_replyto" placeholder="Votre email" required class="w-full p-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <textarea name="message" placeholder="Votre message" rows="6" required class="w-full p-4 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+                        <button type="submit" class="w-full bg-amber-500 text-gray-900 p-4 rounded-lg font-bold text-lg hover:bg-amber-400 transition card-hover">
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-6">
-    <div class="max-w-7xl mx-auto px-4 text-center">
-      <p>© 2025 Vital Plajoe. Tous droits réservés.</p>
-      <p class="mt-2">
-        <a href="mailto:plajoevital@gmail.com" class="hover:text-teal-400">plajoevital@gmail.com</a> | 
-        <a href="tel:+33745042320" class="hover:text-teal-400">+33 7 45 04 23 20</a> | 
-        <a href="https://www.linkedin.com/in/vital-plajoe-40b0b4350" class="hover:text-teal-400">linkedin.com/in/vital-plajoe-40b0b4350</a>
-      </p>
-    </div>
-  </footer>
+    <footer class="bg-gray-900 text-gray-400 py-8 border-t border-gray-700">
+        <div class="max-w-7xl mx-auto px-6 text-center">
+            <p>© 2025 Vital Plajoe. Tous droits réservés.</p>
+        </div>
+    </footer>
 
-  <script>
-    function sendMessage() {
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-      
-      if (name && email && message) {
-        alert('Message envoyé ! Merci de m’avoir contacté.');
-        document.getElementById('name').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('message').value = '';
-      } else {
-        alert('Veuillez remplir tous les champs.');
-      }
-    }
-  </script>
 </body>
 </html>
